@@ -106,7 +106,9 @@ const HomePage: React.FC = () => {
 
       <p className="mt-12 text-sm text-text-secondary">
         We keep track of everything for you!
-        App made by Zed, what thoughtful developer he is, right?
+      </p>
+      <p className="mt-12 text-sm text-text-secondary">
+        App made by Zed, what a thoughtful developer he is, right?
       </p>
     </motion.div>
   );
