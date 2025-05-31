@@ -1,5 +1,7 @@
-const DEV_BACKEND_URL = 'http://localhost:3001/api/v1'; // For local development
-const PROD_BACKEND_URL = 'https://three-functiondaily-backend.onrender.com'; 
+// src/config/apiConfig.ts
+const DEV_BACKEND_URL = 'http://localhost:3001/api/v1'; 
+// Ensure this PROD_BACKEND_URL includes /api/v1
+const PROD_BACKEND_URL = 'https://three-functiondaily-backend.onrender.com/api/v1'; 
 
 export const API_BASE_URL = import.meta.env.DEV 
                             ? DEV_BACKEND_URL
