@@ -105,7 +105,7 @@ const HomePage: React.FC = () => {
       )}
 
       <p className="mt-12 text-sm text-text-secondary">
-        Navigate using the links in the header to explore each feature.
+        We keep track of everything for you!
       </p>
     </motion.div>
   );
