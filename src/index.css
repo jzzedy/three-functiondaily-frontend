@@ -1,0 +1,26 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --color-primary-accent: #2563eb; 
+  --color-secondary-accent: #0ea5e9; 
+  --color-background: #f8fafc; 
+  --color-text-primary: #0f172a; 
+  --color-card-background: #ffffff; 
+}
+
+html.dark {
+  --color-primary-accent: #3b82f6; 
+  --color-secondary-accent: #38bdf8; 
+  --color-background: #0f172a; 
+  --color-text-primary: #f8fafc; 
+  --color-card-background: #1e293b; 
+}
+
+body {
+      @apply bg-background text-text-primary transition-colors duration-300 font-sans;       
+    }
+
