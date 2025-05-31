@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4 text-center text-sm">
         <p>&copy; {new Date().getFullYear()} ThreeFunctionDaily. All rights reserved.</p>
         <p className="mt-1">
-          Made<span className=""> </span>by Zed!
+          Made<span className=""> </span>by Zed.
         </p>
       </div>
     </footer>
