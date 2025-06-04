@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { pageVariants, pageTransition } from '../../../config/animationVariants';
 import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
-import { useAuthStore } from '../../../store/authStore';
 import { Mail, AlertCircle, CheckCircle, KeyRound } from 'lucide-react';
 
 const ForgotPasswordPage: React.FC = () => {

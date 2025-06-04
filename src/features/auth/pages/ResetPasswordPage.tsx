@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { pageVariants, pageTransition } from '../../../config/animationVariants';
 import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
-import { useAuthStore } from '../../../store/authStore';
 import { Lock, AlertCircle, CheckCircle, KeyRound } from 'lucide-react';
 
 const ResetPasswordPage: React.FC = () => {
@@ -14,8 +13,6 @@ const ResetPasswordPage: React.FC = () => {
 
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-   //testing phase first
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
