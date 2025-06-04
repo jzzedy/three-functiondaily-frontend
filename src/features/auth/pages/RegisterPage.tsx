@@ -16,7 +16,7 @@ const RegisterPage: React.FC = () => {
   const [formError, setFormError] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const { register, isLoading, error: authError, isAuthenticated, clearError } = useAuthStore(); 
+  const { register, isLoading, error: authError, isAuthenticated, clearAuthError } = useAuthStore(); 
   const from = location.state?.from?.pathname || "/";
 
   const validateForm = (): boolean => {
@@ -42,7 +42,7 @@ const RegisterPage: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    clearError(); 
+    clearAuthError(); 
     if (!validateForm()) return;
     await register(email, password, username);
  
@@ -82,7 +82,7 @@ const RegisterPage: React.FC = () => {
           {(formError || authError) && (
             <div className="p-3 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-200 rounded-md text-sm flex justify-between items-center">
               <span>{formError || authError}</span>
-              <button type="button" onClick={() => { setFormError(null); clearError();}} className="ml-2 text-sm font-semibold hover:underline" aria-label="Dismiss error">&times;</button>
+              <button type="button" onClick={() => { setFormError(null); clearAuthError();}} className="ml-2 text-sm font-semibold hover:underline" aria-label="Dismiss error">&times;</button>
             </div>
           )}
           <Input

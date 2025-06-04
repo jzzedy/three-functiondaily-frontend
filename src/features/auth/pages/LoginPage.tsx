@@ -13,12 +13,12 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, isLoading, error, isAuthenticated, clearError } = useAuthStore(); 
+  const { login, isLoading, error, isAuthenticated, clearAuthError } = useAuthStore(); 
   const from = location.state?.from?.pathname || "/";
 
    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    clearError(); 
+    clearAuthError(); 
     const success = await login(email, password);
     if (success) {
       navigate(from, { replace: true });
@@ -56,7 +56,7 @@ const LoginPage: React.FC = () => {
               </div>
               <button 
                 type="button" 
-                onClick={clearError} 
+                onClick={clearAuthError} 
                 className="ml-2 text-sm font-semibold hover:underline focus:outline-none" 
                 aria-label="Dismiss error"
               >
