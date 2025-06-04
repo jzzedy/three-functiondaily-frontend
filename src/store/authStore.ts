@@ -8,17 +8,28 @@ interface User {
   username?: string | null;
 }
 
+interface PasswordResetResponse{
+  success: boolean;
+  message: string; 
+}
+
 interface AuthState {
   isAuthenticated: boolean;
   user: User | null;
   token: string | null;
   isLoading: boolean;
   error: string | null;
+  isPasswordResetLoading: boolean;
+  passwordResetError: string | null;
+  passwordResetSuccessMessage: string | null;
   login: (email: string, password: string) => Promise<boolean>; 
   register: (email: string, password: string, username?: string) => Promise<boolean>; 
   logout: () => void;
   fetchCurrentUser: () => Promise<void>; 
+  requestPasswordReset: (email: string) => Promise<PasswordResetResponse>;
+  resetPassword: (token: string, newPassword: string) => Promise<PasswordResetResponse>; 
   clearError: () => void;
+  clearPasswordResetMessages: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -29,30 +40,23 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       isLoading: false,
       error: null,
+      isPasswordResetLoading: false,
+      passwordResetError: null,
+      passwordResetSuccessMessage: null,
 
       login: async (email, password) => {
         set({ isLoading: true, error: null });
         try {
           const response = await apiClient.post('/auth/login', { email, password });
-          const { user, token } = response.data; 
-          set({ 
-            isAuthenticated: true, 
-            user, 
-            token, 
-            isLoading: false, 
-            error: null 
-          });
+          const { user, token } = response.data;
+          set({ isAuthenticated: true, user, token, isLoading: false, error: null });
           return true;
         } catch (err: unknown) { 
           let errorMessage = 'Login failed. Please try again.';
           if (typeof err === "object" && err !== null && "response" in err) {
-            const responseError = err.response as { data?: { message?: string } }; 
-            if (responseError.data?.message) {
-              errorMessage = responseError.data.message;
-            }
-          } else if (err instanceof Error) {
-            errorMessage = err.message;
-          }
+            const responseError = err.response as { data?: { message?: string } };
+            if (responseError.data?.message) { errorMessage = responseError.data.message; }
+          } else if (err instanceof Error) { errorMessage = err.message; }
           set({ isLoading: false, error: errorMessage, isAuthenticated: false, user: null, token: null });
           return false;
         }
@@ -62,32 +66,22 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true, error: null });
         try {
           const response = await apiClient.post('/auth/register', { email, password, username });
-          const { user, token } = response.data; 
-          set({ 
-            isAuthenticated: true, 
-            user, 
-            token, 
-            isLoading: false, 
-            error: null 
-          });
+          const { user, token } = response.data;
+          set({ isAuthenticated: true, user, token, isLoading: false, error: null });
           return true;
         } catch (err: unknown) { 
           let errorMessage = 'Registration failed. Please try again.';
            if (typeof err === "object" && err !== null && "response" in err) {
-            const responseError = err.response as { data?: { message?: string } }; 
-            if (responseError.data?.message) {
-              errorMessage = responseError.data.message;
-            }
-          } else if (err instanceof Error) {
-            errorMessage = err.message;
-          }
+            const responseError = err.response as { data?: { message?: string } };
+            if (responseError.data?.message) { errorMessage = responseError.data.message; }
+          } else if (err instanceof Error) { errorMessage = err.message; }
           set({ isLoading: false, error: errorMessage, isAuthenticated: false, user: null, token: null });
           return false;
         }
       },
 
       logout: () => {
-        set({ isAuthenticated: false, user: null, token: null, error: null, isLoading: false });
+        set({ isAuthenticated: false, user: null, token: null, error: null, isLoading: false, passwordResetError: null, passwordResetSuccessMessage: null });
       },
 
       fetchCurrentUser: async () => {
@@ -106,6 +100,41 @@ export const useAuthStore = create<AuthState>()(
         }
       },
       clearError: () => set({ error: null }),
+
+      requestPasswordReset: async (email: string): Promise<PasswordResetResponse> => {
+        set({ isPasswordResetLoading: true, passwordResetError: null, passwordResetSuccessMessage: null });
+        try {
+          const response = await apiClient.post('/auth/request-password-reset', { email });
+          set({ isPasswordResetLoading: false, passwordResetSuccessMessage: response.data.message });
+          return { success: true, message: response.data.message };
+        } catch (err: unknown) {
+          let errorMessage = 'Failed to request password reset. Please try again.';
+          if (typeof err === "object" && err !== null && "response" in err) {
+            const responseError = err.response as { data?: { message?: string } };
+            if (responseError.data?.message) { errorMessage = responseError.data.message; }
+          } else if (err instanceof Error) { errorMessage = err.message; }
+          set({ isPasswordResetLoading: false, passwordResetError: errorMessage });
+          return { success: false, message: errorMessage };
+        }
+      },
+
+      resetPassword: async (token: string, newPassword: string): Promise<PasswordResetResponse> => {
+        set({ isPasswordResetLoading: true, passwordResetError: null, passwordResetSuccessMessage: null });
+        try {
+          const response = await apiClient.post(`/auth/reset-password/${token}`, { newPassword });
+          set({ isPasswordResetLoading: false, passwordResetSuccessMessage: response.data.message });
+          return { success: true, message: response.data.message };
+        } catch (err: unknown) {
+          let errorMessage = 'Failed to reset password. Please try again.';
+          if (typeof err === "object" && err !== null && "response" in err) {
+            const responseError = err.response as { data?: { message?: string } };
+            if (responseError.data?.message) { errorMessage = responseError.data.message; }
+          } else if (err instanceof Error) { errorMessage = err.message; }
+          set({ isPasswordResetLoading: false, passwordResetError: errorMessage });
+          return { success: false, message: errorMessage };
+        }
+      },
+      clearPasswordResetMessages: () => set({ passwordResetError: null, passwordResetSuccessMessage: null }),
     }),
     {
       name: 'auth-storage', 
