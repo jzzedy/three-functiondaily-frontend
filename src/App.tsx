@@ -13,6 +13,8 @@ import HabitTrackerPage from './features/habitTracker/pages/HabitTrackerPage';
 import LoginPage from './features/auth/pages/LoginPage';
 import RegisterPage from './features/auth/pages/RegisterPage';
 import NotFoundPage from './pages/NotFoundPage';
+import ForgotPasswordPage from './features/auth/pages/ForgotPasswordPage';
+import ResetPasswordPage from './features/auth/pages/ResetPasswordPage'; 
 
 const AppWithThemeAndAuth: React.FC = () => {
   const { theme, setTheme } = useThemeStore();
@@ -41,6 +43,9 @@ const AppWithThemeAndAuth: React.FC = () => {
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password/:token" element={<ResetPasswordPage />} /> 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </AnimatePresence>
