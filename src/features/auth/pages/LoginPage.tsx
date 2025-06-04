@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { FormEvent } from 'react'; 
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion'; 
 import { pageVariants, pageTransition } from '../../../config/animationVariants'; 
-import { Mail, Lock } from 'lucide-react';
+import { Mail, Lock, AlertCircle } from 'lucide-react';
 import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
 import { useAuthStore } from '../../../store/authStore';
@@ -16,13 +16,15 @@ const LoginPage: React.FC = () => {
   const { login, isLoading, error, isAuthenticated, clearError } = useAuthStore(); 
   const from = location.state?.from?.pathname || "/";
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    clearError();
-    await login(email, password);
+    clearError(); 
+    const success = await login(email, password);
+    if (success) {
+      navigate(from, { replace: true });
+    }
   };
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (isAuthenticated) {
       navigate(from, { replace: true });
     }
@@ -37,22 +39,34 @@ const LoginPage: React.FC = () => {
       transition={pageTransition}
       className="min-h-screen flex items-center justify-center bg-background px-4 sm:px-6 lg:px-8"
     >
-      <div className="max-w-md w-full space-y-8 p-8 bg-card-background shadow-xl rounded-lg">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-text-primary">
+      <div className="max-w-md w-full space-y-8 p-8 sm:p-10 bg-card-background shadow-2xl rounded-xl">
+        <div className="text-center">
+          {}
+          {}
+          <h2 className="mt-6 text-3xl font-bold tracking-tight text-text-primary">
             Sign in to your account
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
-            <div className="p-3 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-200 rounded-md text-sm flex justify-between items-center">
-              <span>{error}</span>
-              <button type="button" onClick={clearError} className="ml-2 text-sm font-semibold hover:underline" aria-label="Dismiss error">&times;</button>
+            <div className="p-3 bg-red-100 dark:bg-red-900/50 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-200 rounded-md text-sm flex items-center justify-between">
+              <div className="flex items-center">
+                <AlertCircle size={18} className="mr-2"/>
+                <span>{error}</span>
+              </div>
+              <button 
+                type="button" 
+                onClick={clearError} 
+                className="ml-2 text-sm font-semibold hover:underline focus:outline-none" 
+                aria-label="Dismiss error"
+              >
+                &times;
+              </button>
             </div>
           )}
           <Input
             label="Email address"
-            id="email"
+            id="email-login" 
             name="email"
             type="email"
             autoComplete="email"
@@ -65,7 +79,7 @@ const LoginPage: React.FC = () => {
           />
           <Input
             label="Password"
-            id="password"
+            id="password-login"
             name="password"
             type="password"
             autoComplete="current-password"
@@ -76,11 +90,11 @@ const LoginPage: React.FC = () => {
             icon={<Lock size={16} className="text-gray-400" />}
             disabled={isLoading}
           />
-          <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center justify-end text-sm"> 
             {}
-            <a href="#" className="font-medium text-primary-accent hover:text-secondary-accent">
+            <Link to="/forgot-password" className="font-medium text-primary-accent hover:text-secondary-accent hover:underline">
               Forgot your password?
-            </a>
+            </Link>
           </div>
           <div>
             <Button type="submit" className="w-full" isLoading={isLoading} disabled={isLoading}>
@@ -88,10 +102,10 @@ const LoginPage: React.FC = () => {
             </Button>
           </div>
         </form>
-        <p className="mt-4 text-center text-sm text-text-primary">
-          Don't have an account?{' '}
-          <Link to="/register" className="font-medium text-primary-accent hover:text-secondary-accent">
-            Sign up
+        <p className="mt-6 text-center text-sm text-text-secondary">
+          Not a member?{' '}
+          <Link to="/register" className="font-medium text-primary-accent hover:text-secondary-accent hover:underline">
+            Sign up now
           </Link>
         </p>
       </div>
