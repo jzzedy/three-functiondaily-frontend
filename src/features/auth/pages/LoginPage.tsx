@@ -90,7 +90,7 @@ const LoginPage: React.FC = () => {
             icon={<Lock size={16} className="text-gray-400" />}
             disabled={isLoading}
           />
-          <div className="flex items-center justify-end text-sm"> 
+          <div className="flex items-center justify-center text-sm"> 
             {}
             <Link to="/forgot-password" className="font-medium text-primary-accent hover:text-secondary-accent hover:underline">
               Forgot your password?
