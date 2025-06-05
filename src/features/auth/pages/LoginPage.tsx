@@ -71,7 +71,7 @@ const LoginPage: React.FC = () => {
             type="email"
             autoComplete="email"
             required
-            placeholder="you@example.com"
+            placeholder="your@mail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             icon={<Mail size={16} className="text-gray-400" />}

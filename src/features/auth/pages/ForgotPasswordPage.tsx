@@ -10,7 +10,6 @@ import { Mail, AlertCircle, CheckCircle, KeyRound } from 'lucide-react';
 const ForgotPasswordPage: React.FC = () => {
   const [email, setEmail] = useState('');
 
-  //initial test before modifying store
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -85,7 +84,7 @@ const ForgotPasswordPage: React.FC = () => {
                 type="email"
                 autoComplete="email"
                 required
-                placeholder="you@example.com"
+                placeholder="your@mail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 icon={<Mail size={16} className="text-gray-400" />}

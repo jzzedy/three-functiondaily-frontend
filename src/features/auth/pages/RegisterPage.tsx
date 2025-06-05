@@ -87,13 +87,13 @@ const RegisterPage: React.FC = () => {
           )}
           <Input
             label="Username (Optional)" id="username" name="username" type="text"
-            autoComplete="username" placeholder="Your Name" value={username}
+            autoComplete="username" placeholder="Name" value={username}
             onChange={(e) => setUsername(e.target.value)} icon={<UserIcon size={16} className="text-gray-400" />}
             disabled={isLoading}
           />
           <Input
             label="Email address" id="email-register" name="email" type="email"
-            autoComplete="email" required placeholder="you@example.com" value={email}
+            autoComplete="email" required placeholder="your@mail.com" value={email}
             onChange={(e) => setEmail(e.target.value)} icon={<Mail size={16} className="text-gray-400" />}
             disabled={isLoading}
           />
