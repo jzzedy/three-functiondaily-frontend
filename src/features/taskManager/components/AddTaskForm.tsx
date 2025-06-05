@@ -109,7 +109,7 @@ const AddTaskForm: React.FC = () => {
               id="task-category"
               value={category}
               onChange={(e) => setCategory(e.target.value as TaskCategory | '')}
-              className="form-select block w-full pl-10 pr-3 py-2 border rounded-md bg-card-background text-text-primary border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-accent focus:border-primary-accent shadow-sm"
+              className="form-select block w-full pl-10 pr-8 py-2 border rounded-md bg-card-background text-text-primary border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-accent focus:border-primary-accent shadow-sm"
               disabled={isSubmitting}
             >
               {taskCategories.map((cat) => (
