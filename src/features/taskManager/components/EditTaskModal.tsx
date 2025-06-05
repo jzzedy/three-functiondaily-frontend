@@ -160,7 +160,7 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({ task, isOpen, onClose }) 
                       id="edit-task-category"
                       value={category} 
                       onChange={(e) => setCategory(e.target.value as TaskCategory | '')} 
-                      className="form-select block w-full pl-10 pr-3 py-2 border rounded-md bg-card-background text-text-primary border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-accent focus:border-primary-accent shadow-sm"
+                      className="form-select block w-full pl-10 pr-8 py-2 border rounded-md bg-card-background text-text-primary border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-accent focus:border-primary-accent shadow-sm"
                       disabled={isSubmitting}
                     >
                       <option value="">No Category</option>
@@ -178,7 +178,7 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({ task, isOpen, onClose }) 
                     type="checkbox"
                     checked={isCompleted}
                     onChange={(e) => setIsCompleted(e.target.checked)}
-                    className="h-4 w-4 text-primary-accent focus:ring-primary-accent border-gray-300 rounded disabled:opacity-70"
+                    className="form-checkbox h-4 w-4 text-primary-accent focus:ring-primary-accent border-gray-300 rounded disabled:opacity-70"
                     disabled={isSubmitting}
                 />
                 <label htmlFor="edit-task-completed" className="ml-2 block text-sm text-text-primary">
