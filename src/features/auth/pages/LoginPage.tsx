@@ -1,24 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import type { FormEvent } from 'react'; 
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion'; 
-import { pageVariants, pageTransition } from '../../../config/animationVariants'; 
-import { Mail, Lock, AlertCircle } from 'lucide-react';
-import Input from '../../../components/ui/Input';
-import Button from '../../../components/ui/Button';
-import { useAuthStore } from '../../../store/authStore';
+import React, { useState, useEffect } from "react";
+import type { FormEvent } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  pageVariants,
+  pageTransition,
+} from "../../../config/animationVariants";
+import { Mail, Lock, AlertCircle } from "lucide-react";
+import Input from "../../../components/ui/Input";
+import Button from "../../../components/ui/Button";
+import { useAuthStore } from "../../../store/authStore";
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, isLoading, error, isAuthenticated, clearAuthError } = useAuthStore(); 
+  const { login, isLoading, error, isAuthenticated, clearAuthError } =
+    useAuthStore();
   const from = location.state?.from?.pathname || "/";
 
-   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    clearAuthError(); 
+    clearAuthError();
     const success = await login(email, password);
     if (success) {
       navigate(from, { replace: true });
@@ -31,7 +35,7 @@ const LoginPage: React.FC = () => {
   }, [isAuthenticated, navigate, from]);
 
   return (
-    <motion.div 
+    <motion.div
       initial="initial"
       animate="in"
       exit="out"
@@ -51,13 +55,13 @@ const LoginPage: React.FC = () => {
           {error && (
             <div className="p-3 bg-red-100 dark:bg-red-900/50 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-200 rounded-md text-sm flex items-center justify-between">
               <div className="flex items-center">
-                <AlertCircle size={18} className="mr-2"/>
+                <AlertCircle size={18} className="mr-2" />
                 <span>{error}</span>
               </div>
-              <button 
-                type="button" 
-                onClick={clearAuthError} 
-                className="ml-2 text-sm font-semibold hover:underline focus:outline-none" 
+              <button
+                type="button"
+                onClick={clearAuthError}
+                className="ml-2 text-sm font-semibold hover:underline focus:outline-none"
                 aria-label="Dismiss error"
               >
                 &times;
@@ -66,7 +70,7 @@ const LoginPage: React.FC = () => {
           )}
           <Input
             label="Email address"
-            id="email-login" 
+            id="email-login"
             name="email"
             type="email"
             autoComplete="email"
@@ -90,21 +94,32 @@ const LoginPage: React.FC = () => {
             icon={<Lock size={16} className="text-gray-400" />}
             disabled={isLoading}
           />
-          <div className="flex items-center justify-center text-sm"> 
+          <div className="flex items-center justify-center text-sm">
             {}
-            <Link to="/forgot-password" className="font-medium text-primary-accent hover:text-secondary-accent hover:underline">
+            <Link
+              to="/forgot-password"
+              className="font-medium text-primary-accent hover:text-secondary-accent hover:underline"
+            >
               Forgot your password?
             </Link>
           </div>
           <div>
-            <Button type="submit" className="w-full" isLoading={isLoading} disabled={isLoading}>
-              {isLoading ? 'Signing in...' : 'Sign in'}
+            <Button
+              type="submit"
+              className="w-full"
+              isLoading={isLoading}
+              disabled={isLoading}
+            >
+              {isLoading ? "Signing in..." : "Sign in"}
             </Button>
           </div>
         </form>
         <p className="mt-6 text-center text-sm text-text-secondary">
-          Not a member?{' '}
-          <Link to="/register" className="font-medium text-primary-accent hover:text-secondary-accent hover:underline">
+          Not a member?{" "}
+          <Link
+            to="/register"
+            className="font-medium text-primary-accent hover:text-secondary-accent hover:underline"
+          >
             Sign up now
           </Link>
         </p>

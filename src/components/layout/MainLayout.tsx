@@ -2,8 +2,12 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar'; 
 import Footer from './Footer';
+import AIAssistantWidget from '../../features/aiAssistant/components/AIAssistantWidget';
+import useIsMobile from '../../hooks/useIsMobile';
 
 const MainLayout: React.FC = () => {
+const isMobile = useIsMobile();
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Navbar />
@@ -11,6 +15,7 @@ const MainLayout: React.FC = () => {
         <Outlet /> 
       </main>
       <Footer />
+      {!isMobile && <AIAssistantWidget />}
     </div>
   );
 };
