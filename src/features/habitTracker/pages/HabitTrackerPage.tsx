@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { pageVariants, pageTransition } from '../../../config/animationVariants'; 
 import AddHabitForm from '../components/AddHabitForm';
 import HabitList from '../components/HabitList';
 import { useHabitStore } from '../../../store/habitStore'; 
-import { Loader2, AlertTriangle } from 'lucide-react';
+import { Loader2, AlertTriangle, Plus, X as CloseIcon } from 'lucide-react';
+import useIsMobile from '../../../hooks/useIsMobile';
 
 const HabitTrackerPage: React.FC = () => {
   const { fetchHabits, isLoading, error, clearHabitError } = useHabitStore();
+  const isMobile = useIsMobile();
+  const [showQuickAddModal, setShowQuickAddModal] = useState(false);
 
   useEffect(() => {
     fetchHabits();
@@ -15,6 +18,16 @@ const HabitTrackerPage: React.FC = () => {
         clearHabitError(); 
     }
   }, [fetchHabits, clearHabitError]);
+
+  const handleOpenQuickAdd = () => {
+    console.log("Mobile Quick Add Habit FAB clicked");
+    setShowQuickAddModal(true);
+  };
+
+  const handleCloseQuickAddModal = () => {
+    setShowQuickAddModal(false);
+  };
+
 
   return (
     <motion.div
@@ -54,7 +67,51 @@ const HabitTrackerPage: React.FC = () => {
       )}
 
       {!isLoading && !error && <HabitList />}
-
+      {}
+      {isMobile && (
+        <motion.button
+          onClick={handleOpenQuickAdd}
+          className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 bg-secondary-accent text-white p-4 rounded-full shadow-lg z-40 hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-accent dark:focus:ring-offset-dark-background"
+          aria-label="Quick Add Habit"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+        >
+          <Plus size={24} />
+        </motion.button>
+      )}
+      {}
+      <AnimatePresence>
+        {isMobile && showQuickAddModal && (
+          <motion.div 
+              className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={handleCloseQuickAddModal} 
+          >
+              <motion.div 
+                  className="bg-card-background p-6 rounded-lg shadow-xl w-full max-w-md"
+                  onClick={(e) => e.stopPropagation()} 
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 50, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-xl font-semibold text-text-primary">Quick Add Habit</h3>
+                    <button onClick={handleCloseQuickAddModal} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                        <CloseIcon size={24}/>
+                    </button>
+                  </div>
+                  {}
+                  <AddHabitForm /> 
+              </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
