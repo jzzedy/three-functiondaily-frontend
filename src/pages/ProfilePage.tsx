@@ -73,8 +73,6 @@ const ProfilePage: React.FC = () => {
             </div>
           </div>
         </div>
-
-        {}
         <div className="md:col-span-2">
           <form onSubmit={handleSubmit} className="p-6 bg-card-background rounded-lg shadow-md space-y-6">
             <h3 className="text-lg font-semibold text-text-primary mb-4">Change Password</h3>
