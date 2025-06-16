@@ -46,31 +46,19 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center space-x-2">
-              <img
-                src={AppLogo}
-                alt="ThreeFunctionDaily Logo"
-                className="h-8 w-auto"
-              />
-              <span className="hidden sm:inline font-bold text-lg text-text-primary font-poppins">
-                ThreeFunctionDaily
-              </span>
+              <img src={AppLogo} alt="ThreeFunctionDaily Logo" className="h-8 w-auto" />
+              <span className="hidden sm:inline font-bold text-lg text-text-primary font-poppins">ThreeFunctionDaily</span>
             </Link>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                {isAuthenticated && (
-                  <>
-                    <NavLink to="/tasks" className={navLinkClass}>
-                      Tasks
-                    </NavLink>
-                    <NavLink to="/expenses" className={navLinkClass}>
-                      Expenses
-                    </NavLink>
-                    <NavLink to="/habits" className={navLinkClass}>
-                      Habits
-                    </NavLink>
-                  </>
-                )}
-              </div>
+          </div>
+          <div className="hidden md:block">
+            <div className="flex items-baseline space-x-4">
+              {isAuthenticated && (
+                <>
+                  <NavLink to="/tasks" className={navLinkClass}>Tasks</NavLink>
+                  <NavLink to="/expenses" className={navLinkClass}>Expenses</NavLink>
+                  <NavLink to="/habits" className={navLinkClass}>Habits</NavLink>
+                </>
+              )}
             </div>
           </div>
           <div className="flex items-center">
@@ -79,7 +67,7 @@ const Navbar: React.FC = () => {
               className="p-2 rounded-full text-gray-400 hover:text-text-primary hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-accent"
               aria-label="Toggle theme"
             >
-              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             {isAuthenticated ? (
               <div className="ml-3 relative" ref={dropdownRef}>
@@ -91,12 +79,8 @@ const Navbar: React.FC = () => {
                     aria-haspopup="true"
                   >
                     <span className="sr-only">Open user menu</span>
-                    <div className="h-8 w-8 rounded-full bg-primary-accent flex items-center justify-center text-white font-bold">
-                      {user?.username ? (
-                        user.username.charAt(0).toUpperCase()
-                      ) : (
-                        <UserIcon size={18} />
-                      )}
+                     <div className="h-8 w-8 rounded-full bg-primary-accent flex items-center justify-center text-white font-bold">
+                       {user?.username ? user.username.charAt(0).toUpperCase() : <UserIcon size={18}/>}
                     </div>
                   </button>
                 </div>
