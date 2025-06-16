@@ -17,9 +17,9 @@ interface AuthState {
   isLoading: boolean; 
   error: string | null; 
 
-  isPasswordResetLoading: boolean; 
-  passwordResetError: string | null;
-  passwordResetSuccessMessage: string | null;
+  isPasswordActionLoading: boolean; 
+  passwordActionError: string | null;
+  passwordActionSuccessMessage: string | null;
 
   login: (email: string, password: string) => Promise<boolean>; 
   register: (email: string, password: string, username?: string) => Promise<boolean>; 
@@ -27,8 +27,9 @@ interface AuthState {
   fetchCurrentUser: () => Promise<void>; 
   requestPasswordReset: (email: string) => Promise<PasswordActionResponse>; 
   resetPassword: (token: string, newPassword: string) => Promise<PasswordActionResponse>;
+  changePassword: (currentPassword: string, newPassword: string) => Promise<boolean>;
   clearAuthError: () => void;
-  clearPasswordResetMessages: () => void; 
+  clearPasswordActionMessages: () => void; 
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -39,12 +40,12 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       isLoading: false,
       error: null,
-      isPasswordResetLoading: false,
-      passwordResetError: null,
-      passwordResetSuccessMessage: null,
+      isPasswordActionLoading: false,
+      passwordActionError: null,
+      passwordActionSuccessMessage: null,
 
       login: async (email, password) => {
-        set({ isLoading: true, error: null, passwordResetError: null, passwordResetSuccessMessage: null });
+        set({ isLoading: true, error: null, passwordActionError: null, passwordActionSuccessMessage: null });
         try {
           const response = await apiClient.post('/auth/login', { email, password });
           const { user, token } = response.data;
@@ -68,7 +69,7 @@ export const useAuthStore = create<AuthState>()(
       },
 
       register: async (email, password, username) => {
-        set({ isLoading: true, error: null, passwordResetError: null, passwordResetSuccessMessage: null });
+        set({ isLoading: true, error: null, passwordActionError: null, passwordActionSuccessMessage: null });
         try {
           const response = await apiClient.post('/auth/register', { email, password, username });
           const { user, token } = response.data;
@@ -98,8 +99,8 @@ export const useAuthStore = create<AuthState>()(
           token: null, 
           error: null, 
           isLoading: false,
-          passwordResetError: null,
-          passwordResetSuccessMessage: null 
+          passwordActionError: null,
+          passwordActionSuccessMessage: null 
         });
       },
 
@@ -121,10 +122,10 @@ export const useAuthStore = create<AuthState>()(
       clearAuthError: () => set({ error: null }), 
 
       requestPasswordReset: async (email: string): Promise<PasswordActionResponse> => {
-        set({ isPasswordResetLoading: true, passwordResetError: null, passwordResetSuccessMessage: null });
+        set({ isPasswordActionLoading: true, passwordActionError: null, passwordActionSuccessMessage: null });
         try {
           const response = await apiClient.post('/auth/request-password-reset', { email });
-          set({ isPasswordResetLoading: false, passwordResetSuccessMessage: response.data.message });
+          set({ isPasswordActionLoading: false, passwordActionSuccessMessage: response.data.message });
           return { success: true, message: response.data.message };
         } catch (err: unknown) {
           let errorMessage = 'Failed to request password reset. Please try again.';
@@ -132,16 +133,16 @@ export const useAuthStore = create<AuthState>()(
             const responseError = err.response as { data?: { message?: string } };
             if (responseError.data?.message) { errorMessage = responseError.data.message; }
           } else if (err instanceof Error) { errorMessage = err.message; }
-          set({ isPasswordResetLoading: false, passwordResetError: errorMessage });
+          set({ isPasswordActionLoading: false, passwordActionError: errorMessage });
           return { success: false, message: errorMessage };
         }
       },
 
       resetPassword: async (token: string, newPassword: string): Promise<PasswordActionResponse> => {
-        set({ isPasswordResetLoading: true, passwordResetError: null, passwordResetSuccessMessage: null });
+        set({ isPasswordActionLoading: true, passwordActionError: null, passwordActionSuccessMessage: null });
         try {
           const response = await apiClient.post(`/auth/reset-password/${token}`, { newPassword });
-          set({ isPasswordResetLoading: false, passwordResetSuccessMessage: response.data.message });
+          set({ isPasswordActionLoading: false, passwordActionSuccessMessage: response.data.message });
           return { success: true, message: response.data.message };
         } catch (err: unknown) {
           let errorMessage = 'Failed to reset password. Please try again.';
@@ -149,11 +150,28 @@ export const useAuthStore = create<AuthState>()(
             const responseError = err.response as { data?: { message?: string } };
             if (responseError.data?.message) { errorMessage = responseError.data.message; }
           } else if (err instanceof Error) { errorMessage = err.message; }
-          set({ isPasswordResetLoading: false, passwordResetError: errorMessage });
+          set({ isPasswordActionLoading: false, passwordActionError: errorMessage });
           return { success: false, message: errorMessage };
         }
       },
-      clearPasswordResetMessages: () => set({ passwordResetError: null, passwordResetSuccessMessage: null }),
+      changePassword: async (currentPassword: string, newPassword: string): Promise<boolean> => {
+        set({ isPasswordActionLoading: true, passwordActionError: null, passwordActionSuccessMessage: null });
+        try {
+            const response = await apiClient.put('/auth/change-password', { currentPassword, newPassword });
+            set({ isPasswordActionLoading: false, passwordActionSuccessMessage: response.data.message });
+            return true;
+        } catch (err: unknown) {
+            let errorMessage = 'Failed to change password.';
+            if (typeof err === "object" && err !== null && "response" in err) {
+              const responseError = err.response as { data?: { message?: string } };
+              if (responseError.data?.message) { errorMessage = responseError.data.message; }
+            } else if (err instanceof Error) { errorMessage = err.message; }
+            set({ isPasswordActionLoading: false, passwordActionError: errorMessage });
+            return false;
+        }
+      },
+
+      clearPasswordActionMessages: () => set({ passwordActionError: null, passwordActionSuccessMessage: null }),
     }),
     {
       name: 'auth-storage', 
