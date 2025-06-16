@@ -15,6 +15,7 @@ import RegisterPage from './features/auth/pages/RegisterPage';
 import NotFoundPage from './pages/NotFoundPage';
 import ForgotPasswordPage from './features/auth/pages/ForgotPasswordPage';
 import ResetPasswordPage from './features/auth/pages/ResetPasswordPage'; 
+import ProfilePage from './pages/ProfilePage';
 
 const AppWithThemeAndAuth: React.FC = () => {
   const { theme, setTheme } = useThemeStore();
@@ -27,8 +28,10 @@ const AppWithThemeAndAuth: React.FC = () => {
   }, [theme, setTheme]);
 
   useEffect(() => {
-    fetchCurrentUser(); 
-  }, [fetchCurrentUser]);
+    if (useAuthStore.getState().token) {
+              fetchCurrentUser(); 
+            }
+          }, [fetchCurrentUser]);
 
   return (
     <AnimatePresence mode="wait">
@@ -39,6 +42,7 @@ const AppWithThemeAndAuth: React.FC = () => {
             <Route path="/tasks" element={<TaskManagerPage />} />
             <Route path="/expenses" element={<ExpenseTrackerPage />} />
             <Route path="/habits" element={<HabitTrackerPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
         </Route>
         <Route path="/login" element={<LoginPage />} />
