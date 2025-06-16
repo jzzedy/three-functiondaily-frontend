@@ -8,7 +8,7 @@ import Button from '../components/ui/Button';
 import { User, Lock, Mail, Save, AlertCircle, CheckCircle } from 'lucide-react';
 
 const ProfilePage: React.FC = () => {
-  const { user, changePassword, isPasswordChangeLoading, passwordChangeError, passwordChangeSuccess, clearPasswordChangeMessages } = useAuthStore();
+  const { user, changePassword, isPasswordActionLoading, passwordActionError, passwordActionSuccessMessage, clearPasswordActionMessages } = useAuthStore();
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -16,14 +16,14 @@ const ProfilePage: React.FC = () => {
 
   useEffect(() => {
     return () => {
-      clearPasswordChangeMessages();
+      clearPasswordActionMessages();
     };
-  }, [clearPasswordChangeMessages]);
+  }, [clearPasswordActionMessages]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormError(null);
-    clearPasswordChangeMessages();
+    clearPasswordActionMessages();
 
     if (newPassword.length < 8) {
       setFormError("New password must be at least 8 characters long.");
@@ -82,16 +82,16 @@ const ProfilePage: React.FC = () => {
                 <span>{formError}</span>
               </div>
             )}
-            {passwordChangeError && (
+            {passwordActionError && (
               <div className="p-3 bg-red-100 dark:bg-red-900/50 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-200 rounded-md text-sm flex items-center space-x-2">
                 <AlertCircle size={18} />
-                <span>{passwordChangeError}</span>
+                <span>{passwordActionError}</span>
               </div>
             )}
-            {passwordChangeSuccess && (
+            {passwordActionSuccessMessage && (
               <div className="p-3 bg-green-100 dark:bg-green-900/50 border border-green-400 dark:border-green-700 text-green-700 dark:text-green-200 rounded-md text-sm flex items-center space-x-2">
                 <CheckCircle size={18} />
-                <span>{passwordChangeSuccess}</span>
+                <span>{passwordActionSuccessMessage}</span>
               </div>
             )}
             <Input
@@ -102,7 +102,7 @@ const ProfilePage: React.FC = () => {
               onChange={(e) => setCurrentPassword(e.target.value)}
               required
               icon={<Lock size={16} className="text-gray-400" />}
-              disabled={isPasswordChangeLoading}
+              disabled={isPasswordActionLoading}
             />
             <Input
               label="New Password"
@@ -113,7 +113,7 @@ const ProfilePage: React.FC = () => {
               required
               placeholder="Minimum 8 characters"
               icon={<Lock size={16} className="text-gray-400" />}
-              disabled={isPasswordChangeLoading}
+              disabled={isPasswordActionLoading}
             />
             <Input
               label="Confirm New Password"
@@ -123,16 +123,16 @@ const ProfilePage: React.FC = () => {
               onChange={(e) => setConfirmNewPassword(e.target.value)}
               required
               icon={<Lock size={16} className="text-gray-400" />}
-              disabled={isPasswordChangeLoading}
+              disabled={isPasswordActionLoading}
             />
             <div className="flex justify-end">
               <Button
                 type="submit"
-                isLoading={isPasswordChangeLoading}
-                disabled={isPasswordChangeLoading}
+                isLoading={isPasswordActionLoading}
+                disabled={isPasswordActionLoading}
                 icon={<Save size={18} />}
               >
-                {isPasswordChangeLoading ? 'Saving...' : 'Save New Password'}
+                {isPasswordActionLoading ? 'Saving...' : 'Save New Password'}
               </Button>
             </div>
           </form>
