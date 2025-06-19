@@ -27,10 +27,10 @@ A sleek, full-featured productivity app that brings together a **Task Manager**,
 
 ## ⚙️ Tech Stack
 
-| Frontend         | Backend          |  Database           Extras                |
-|------------------|------------------|------------------   ------------------------|
-| React (TypeScript)| PHP (REST API) |  mySQL(tidB Cloud)  | Gemini API (AI Assistant) |
-| HTML, CSS        |  (used Render)  |                     | Currency Toggle (₱/$) |
+| Frontend         | Backend       | Extras                |
+|------------------|---------------|------------------------|
+| React (TypeScript) | PHP(Render) | Gemini API (AI Assistant) |
+| HTML, CSS        | MySQL (tidB Cloud)| Currency Toggle (₱/$) |
 
 ---
 
