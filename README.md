@@ -61,7 +61,7 @@ A sleek, full-featured productivity app that brings together a **Task Manager**,
 
 ### v1.3 – Currency Support
 - 💱 Added **Peso (₱)** and **Dollar ($)** toggles for expenses
-
+- project still ongoing . . .
 ---
 
 ## 💡 Future Plans (Suggestions)
@@ -74,7 +74,7 @@ A sleek, full-featured productivity app that brings together a **Task Manager**,
 ## 🧠 Author Notes
 
 > This project was built out of a love for productivity tools, enhanced with AI to make task management feel more human. The desktop AI interactions feel immersive, while mobile users enjoy a lightweight experience.  
->
+> still ongoing . . .
 > **Cool, right? 😎**
 
 ---
