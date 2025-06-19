@@ -82,7 +82,7 @@ A sleek, full-featured productivity app that brings together a **Task Manager**,
 ## 📩 Contribute or Feedback
 
 If you have suggestions or want to contribute:
-- Create an [issue](https://github.com/your-repo/issues)
+- Create an [issue](https://github.com/three-functiondaily-frontend/issues)
 - Submit a pull request
 - Or just star ⭐ the repo and share some love!
 
