@@ -48,7 +48,6 @@ A sleek, full-featured productivity app that brings together a **Task Manager**,
 - 🎉 Fully functional Task, Expense, and Habit Tracker
 - 🔐 Authentication (Login, Register, Reset Password)
 - 🌓 Dark and Light Mode toggle
-- 👤 Profile page per user
 
 ### v1.1 – AI Update (Desktop Focused)
 - 🤖 Gemini API AI Assistant added
@@ -61,6 +60,7 @@ A sleek, full-featured productivity app that brings together a **Task Manager**,
 
 ### v1.3 – Currency Support
 - 💱 Added **Peso (₱)** and **Dollar ($)** toggles for expenses
+- 👤 Profile page per user
 - project still ongoing . . .
 ---
 
