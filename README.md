@@ -75,9 +75,11 @@ A sleek, full-featured productivity app that brings together a **Task Manager**,
 
 > This project was built out of a love for productivity tools, enhanced with AI to make task management feel more human. The desktop AI interactions feel immersive, while mobile users enjoy a lightweight experience.  
 > still ongoing . . .
-> **Cool, right? 😎**
 
 ---
+
+## Why I built this?
+> These tools already exist in the real world, what I thought about is "What if I take these tools and make it accessible in 1 place, with added features?". And that's what sparked in my mind to make it.
 
 ## 📩 Contribute or Feedback
 
