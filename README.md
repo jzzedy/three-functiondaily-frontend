@@ -1,6 +1,6 @@
 # 🔥 ThreeFunctionDaily – Task, Expense & Habit Tracker
 
-A sleek, full-featured productivity app that brings together a **Task Manager**, **Expense Tracker**, and **Habit Builder** — all in one responsive platform. Built with **React (TypeScript)** for the frontend and **PHP** for the backend, this app empowers users to stay on top of their goals with an intelligent twist: **AI-powered feedback and greetings** via the Gemini API.
+A sleek, full-featured productivity app that brings together a **Task Manager**, **Expense Tracker**, and **Habit Builder** — all in one responsive platform. Built with **React (TypeScript)** for the frontend and **NodeJS,Express** for the backend, this app empowers users to stay on top of their goals with an intelligent twist: **AI-powered feedback and greetings** via the Gemini API.
 
 ---
 
@@ -29,7 +29,7 @@ A sleek, full-featured productivity app that brings together a **Task Manager**,
 
 | Frontend         | Backend       | Extras                |
 |------------------|---------------|------------------------|
-| React (TypeScript) | PHP(Render) | Gemini API (AI Assistant) |
+| React (TypeScript) | NodeJS/Express(Render) | Gemini API (AI Assistant) |
 | HTML, CSS        | MySQL (tidB Cloud)| Currency Toggle (₱/$) |
 
 ---
